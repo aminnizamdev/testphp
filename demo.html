@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskMaster - Demo</title>
+    
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/taskorganizer/public/css/custom.css">
+    
+    <!-- Inline CSS - Will be overridden by custom.css for most styles -->
+    <style>
+        /* Basic styling for demo if custom.css doesn't load */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fc;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-tasks me-2"></i>TaskMaster
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="board-demo.html">Board Demo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a href="#" class="btn btn-outline-primary me-2">Login</a>
+                    <a href="#" class="btn btn-primary">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="bg-primary text-white py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <span class="badge bg-white text-primary mb-3">New & Improved</span>
+                    <h1 class="display-4 fw-bold mb-3">Organize your tasks like never before</h1>
+                    <p class="lead mb-4">TaskMaster helps teams and individuals organize, track, and manage their work in a visual, productive, and rewarding way.</p>
+                    <div class="d-grid gap-2 d-md-flex">
+                        <a href="board-demo.html" class="btn btn-light btn-lg px-4 me-md-2">Try Demo</a>
+                        <a href="#" class="btn btn-outline-light btn-lg px-4">Learn More</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="position-relative">
+                        <img src="https://via.placeholder.com/600x400" alt="TaskMaster Dashboard" class="img-fluid rounded shadow-lg">
+                        <div class="position-absolute top-0 end-0 mt-n3 me-n3">
+                            <span class="badge bg-success p-3 rounded-pill shadow">
+                                <i class="fas fa-check-circle me-1"></i> Enterprise Ready
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="py-5 bg-light">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-lg-8 mx-auto">
+                    <span class="badge bg-primary text-white mb-2">Powerful Features</span>
+                    <h2 class="fw-bold">Simplify your workflow with TaskMaster</h2>
+                    <p class="lead text-muted">Powerful features that make task management a breeze</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon bg-primary bg-gradient text-white mb-3 mx-auto" style="width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-columns fa-lg"></i>
+                            </div>
+                            <h4 class="card-title fw-bold">Kanban Boards</h4>
+                            <p class="card-text text-muted">Visualize your work with customizable boards. Drag and drop tasks to track progress.</p>
+                            <a href="board-demo.html" class="btn btn-sm btn-outline-primary mt-3">Try Demo <i class="fas fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon bg-info bg-gradient text-white mb-3 mx-auto" style="width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-calendar-alt fa-lg"></i>
+                            </div>
+                            <h4 class="card-title fw-bold">Calendar View</h4>
+                            <p class="card-text text-muted">Plan and schedule tasks with an interactive calendar. Never miss a deadline again.</p>
+                            <a href="#" class="btn btn-sm btn-outline-primary mt-3">Learn More <i class="fas fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon bg-success bg-gradient text-white mb-3 mx-auto" style="width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-users fa-lg"></i>
+                            </div>
+                            <h4 class="card-title fw-bold">Team Collaboration</h4>
+                            <p class="card-text text-muted">Work together seamlessly. Assign tasks, comment, and share updates in real-time.</p>
+                            <a href="#" class="btn btn-sm btn-outline-primary mt-3">Learn More <i class="fas fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="py-5 bg-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-6 text-center mb-4 mb-md-0">
+                    <h2 class="display-4 fw-bold text-primary mb-1">98%</h2>
+                    <p class="text-muted mb-0">Customer Satisfaction</p>
+                </div>
+                <div class="col-md-3 col-6 text-center mb-4 mb-md-0">
+                    <h2 class="display-4 fw-bold text-primary mb-1">50K+</h2>
+                    <p class="text-muted mb-0">Active Users</p>
+                </div>
+                <div class="col-md-3 col-6 text-center">
+                    <h2 class="display-4 fw-bold text-primary mb-1">500+</h2>
+                    <p class="text-muted mb-0">Enterprise Clients</p>
+                </div>
+                <div class="col-md-3 col-6 text-center">
+                    <h2 class="display-4 fw-bold text-primary mb-1">24/7</h2>
+                    <p class="text-muted mb-0">Customer Support</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="bg-primary text-white py-5">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-8">
+                    <h2 class="fw-bold mb-3">Ready to supercharge your productivity?</h2>
+                    <p class="lead mb-4">Join thousands of users and teams who have transformed how they manage tasks.</p>
+                    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                        <a href="#" class="btn btn-light btn-lg px-4 me-sm-3">Start For Free</a>
+                        <a href="board-demo.html" class="btn btn-outline-light btn-lg px-4">View Demo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white mt-0 py-5 border-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="fw-bold mb-3"><i class="fas fa-tasks me-2"></i>TaskMaster</h5>
+                    <p class="text-muted mb-3">The ultimate task management solution for teams and individuals.</p>
+                    <div class="social-icons mb-3">
+                        <a href="#" class="text-secondary me-3"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-secondary me-3"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#" class="text-secondary me-3"><i class="fab fa-linkedin fa-lg"></i></a>
+                        <a href="#" class="text-secondary"><i class="fab fa-github fa-lg"></i></a>
+                    </div>
+                    <p class="small text-muted">© 2023 TaskMaster. All rights reserved.</p>
+                </div>
+                <div class="col-6 col-md-2 mb-3 mb-md-0">
+                    <h6 class="fw-bold mb-3">Product</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Features</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Pricing</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Integrations</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Updates</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-2 mb-3 mb-md-0">
+                    <h6 class="fw-bold mb-3">Resources</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Documentation</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Tutorials</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Blog</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Support</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-2 mb-3 mb-md-0">
+                    <h6 class="fw-bold mb-3">Company</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">About</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Careers</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Investors</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-2">
+                    <h6 class="fw-bold mb-3">Legal</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Privacy</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Terms</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Security</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- jQuery (required for some plugins) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add animation to stats
+            const statsElements = document.querySelectorAll('.display-4.fw-bold');
+            if (statsElements.length) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('animate-count');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                });
+                
+                statsElements.forEach(stat => {
+                    observer.observe(stat);
+                });
+            }
+            
+            // Animate on scroll for feature cards
+            const featureCards = document.querySelectorAll('.card');
+            if (featureCards.length) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            setTimeout(() => {
+                                entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                            }, 100 * Array.from(featureCards).indexOf(entry.target));
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                });
+                
+                featureCards.forEach(card => {
+                    observer.observe(card);
+                });
+            }
+        });
+    </script>
+</body>
+</html> 

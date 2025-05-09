@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskMaster - Board Demo</title>
+    
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/taskorganizer/public/css/custom.css">
+    
+    <!-- Inline CSS - Will be overridden by custom.css for most styles -->
+    <style>
+        /* Basic styling for demo if custom.css doesn't load */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fc;
+        }
+        
+        /* Fix for overlapping sidebar */
+        @media (min-width: 992px) {
+            .main-content {
+                margin-left: 250px;
+                padding: 2rem;
+                width: calc(100% - 250px);
+            }
+            
+            .sidebar {
+                width: 250px;
+                z-index: 1000;
+            }
+        }
+        
+        @media (max-width: 991.98px) {
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+            
+            .sidebar {
+                left: -250px;
+            }
+            
+            .sidebar.show {
+                left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container-fluid px-4">
+            <button class="mobile-toggle me-3 d-lg-none" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <a class="navbar-brand" href="demo.html">
+                <i class="fas fa-tasks me-2"></i>TaskMaster
+            </a>
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="demo.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <div class="dropdown me-2">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle me-1"></i> Account
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i> Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i> Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Backdrop for mobile sidebar -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <!-- Sidebar -->
+            <div class="col-lg-2 p-0">
+                <div class="sidebar" id="sidebar">
+                    <div class="p-3 pt-4">
+                        <h5 class="mb-3 ps-2">Dashboard</h5>
+                        <div class="mb-4">
+                            <a href="#" class="sidebar-link">
+                                <i class="fas fa-home"></i> Overview
+                            </a>
+                            <a href="#" class="sidebar-link active">
+                                <i class="fas fa-columns"></i> Board
+                            </a>
+                            <a href="#" class="sidebar-link">
+                                <i class="fas fa-calendar"></i> Calendar
+                            </a>
+                        </div>
+                        
+                        <h5 class="mb-3 ps-2">Tasks</h5>
+                        <div class="mb-4">
+                            <a href="#" class="sidebar-link">
+                                <i class="fas fa-plus"></i> Create Task
+                            </a>
+                            <a href="#" class="sidebar-link">
+                                <i class="fas fa-list"></i> My Tasks
+                            </a>
+                            <a href="#" class="sidebar-link">
+                                <i class="fas fa-users"></i> Team Tasks
+                            </a>
+                        </div>
+                        
+                        <h5 class="mb-3 ps-2">Projects</h5>
+                        <div class="mb-4">
+                            <a href="#" class="sidebar-link">
+                                <i class="fas fa-project-diagram"></i> All Projects
+                            </a>
+                            <a href="#" class="sidebar-link">
+                                <i class="fas fa-plus-circle"></i> New Project
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-lg-10 main-content">
+                <!-- Board Header -->
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4">
+                    <div class="mb-3 mb-md-0">
+                        <h1 class="h3 mb-1">Task Board</h1>
+                        <p class="text-muted mb-0">Manage your tasks in a Kanban-style board</p>
+                    </div>
+                    <div class="d-flex flex-wrap gap-2">
+                        <div class="dropdown me-2">
+                            <button class="btn btn-light dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-filter me-2"></i> Filter
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="filterDropdown">
+                                <li><h6 class="dropdown-header">By Priority</h6></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-circle text-danger me-2"></i> High</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-circle text-warning me-2"></i> Medium</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-circle text-success me-2"></i> Low</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><h6 class="dropdown-header">By Assignee</h6></li>
+                                <li><a class="dropdown-item" href="#">John Doe</a></li>
+                                <li><a class="dropdown-item" href="#">Jane Smith</a></li>
+                                <li><a class="dropdown-item" href="#">Mike Johnson</a></li>
+                            </ul>
+                        </div>
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-plus me-2"></i> New Task
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Task Board -->
+                <div class="row g-4">
+                    <!-- To Do Column -->
+                    <div class="col-lg-4">
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center column-header">
+                                <h5 class="mb-0 text-info">
+                                    <i class="fas fa-clipboard-list me-2"></i> To Do
+                                </h5>
+                                <span class="badge bg-info rounded-pill px-3 py-2">2</span>
+                            </div>
+                            <div class="card-body p-3 status-column" id="todo-column">
+                                <!-- Task Card -->
+                                <div class="card task-card mb-3 priority-medium" draggable="true">
+                                    <div class="card-body p-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <h6 class="card-title mb-0 fw-semibold">Design homepage mockup</h6>
+                                            <div class="dropdown">
+                                                <button class="btn btn-sm btn-icon" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-eye me-2"></i> View</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i> Edit</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-arrow-right me-2"></i> Move to In Progress</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <p class="card-text small text-muted mb-3">Create mockup designs for the new website homepage</p>
+                                        <div class="mb-3">
+                                            <span class="task-tag">Design</span>
+                                            <span class="task-tag">Frontend</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <span class="badge bg-warning text-dark">Medium</span>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <small class="text-muted me-2">
+                                                    <i class="far fa-calendar-alt me-1"></i> 
+                                                    2023-09-20
+                                                </small>
+                                                <div class="avatar">J</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Task Card -->
+                                <div class="card task-card mb-3 priority-low" draggable="true">
+                                    <div class="card-body p-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <h6 class="card-title mb-0 fw-semibold">Update documentation</h6>
+                                            <div class="dropdown">
+                                                <button class="btn btn-sm btn-icon" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-eye me-2"></i> View</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i> Edit</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-arrow-right me-2"></i> Move to In Progress</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <p class="card-text small text-muted mb-3">Update user documentation with new features</p>
+                                        <div class="mb-3">
+                                            <span class="task-tag">Documentation</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <span class="badge bg-success">Low</span>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <small class="text-muted me-2">
+                                                    <i class="far fa-calendar-alt me-1"></i> 
+                                                    2023-09-30
+                                                </small>
+                                                <div class="avatar">J</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- In Progress Column -->
+                    <div class="col-lg-4">
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0 text-warning">
+                                    <i class="fas fa-spinner me-2"></i> In Progress
+                                </h5>
+                                <span class="badge bg-warning text-dark rounded-pill">2</span>
+                            </div>
+                            <div class="card-body p-3 status-column" id="inprogress-column">
+                                <!-- Task Card -->
+                                <div class="card task-card mb-3 priority-high" draggable="true">
+                                    <div class="card-body p-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <h6 class="card-title mb-0">Complete project proposal</h6>
+                                            <div class="dropdown">
+                                                <button class="btn btn-sm btn-icon" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-eye me-2"></i> View</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i> Edit</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-arrow-left me-2"></i> Move to To Do</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-arrow-right me-2"></i> Move to Done</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <p class="card-text small text-muted mb-3">Finalize the project proposal document with budget and timeline</p>
+                                        <div class="mb-3">
+                                            <span class="task-tag">Documentation</span>
+                                            <span class="task-tag">Planning</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <span class="badge bg-danger">High</span>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <small class="text-muted me-2">
+                                                    <i class="far fa-calendar-alt me-1"></i> 
+                                                    2023-09-15
+                                                </small>
+                                                <div class="avatar">J</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Task Card -->
+                                <div class="card task-card mb-3 priority-medium" draggable="true">
+                                    <div class="card-body p-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <h6 class="card-title mb-0">API integration</h6>
+                                            <div class="dropdown">
+                                                <button class="btn btn-sm btn-icon" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-eye me-2"></i> View</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i> Edit</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-arrow-left me-2"></i> Move to To Do</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-arrow-right me-2"></i> Move to Done</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <p class="card-text small text-muted mb-3">Integrate payment gateway API</p>
+                                        <div class="mb-3">
+                                            <span class="task-tag">Backend</span>
+                                            <span class="task-tag">API</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <span class="badge bg-warning text-dark">Medium</span>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <small class="text-muted me-2">
+                                                    <i class="far fa-calendar-alt me-1"></i> 
+                                                    2023-09-25
+                                                </small>
+                                                <div class="avatar">S</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Done Column -->
+                    <div class="col-lg-4">
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0 text-success">
+                                    <i class="fas fa-check-circle me-2"></i> Done
+                                </h5>
+                                <span class="badge bg-success rounded-pill">1</span>
+                            </div>
+                            <div class="card-body p-3 status-column" id="done-column">
+                                <!-- Task Card -->
+                                <div class="card task-card mb-3 priority-high" draggable="true">
+                                    <div class="card-body p-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <h6 class="card-title mb-0">Database optimization</h6>
+                                            <div class="dropdown">
+                                                <button class="btn btn-sm btn-icon" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-eye me-2"></i> View</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i> Edit</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-arrow-left me-2"></i> Move to In Progress</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <p class="card-text small text-muted mb-3">Optimize database queries for better performance</p>
+                                        <div class="mb-3">
+                                            <span class="task-tag">Backend</span>
+                                            <span class="task-tag">Performance</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <span class="badge bg-danger">High</span>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <small class="text-muted me-2">
+                                                    <i class="far fa-calendar-alt me-1"></i> 
+                                                    2023-09-10
+                                                </small>
+                                                <div class="avatar">M</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- jQuery (required for some plugins) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Improved scripts for sidebar toggle and drag-drop functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile sidebar toggle
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+            
+            if (sidebarToggle && sidebar && backdrop) {
+                sidebarToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('show');
+                    backdrop.classList.toggle('show');
+                    document.body.classList.toggle('sidebar-open');
+                });
+                
+                backdrop.addEventListener('click', function() {
+                    sidebar.classList.remove('show');
+                    backdrop.classList.remove('show');
+                    document.body.classList.remove('sidebar-open');
+                });
+            }
+            
+            // Drag and drop functionality
+            const tasks = document.querySelectorAll('.task-card');
+            const columns = document.querySelectorAll('.status-column');
+            
+            let draggedTask = null;
+            
+            // Add event listeners for drag and drop
+            tasks.forEach(task => {
+                task.addEventListener('dragstart', function(e) {
+                    draggedTask = this;
+                    this.classList.add('dragging');
+                    setTimeout(() => {
+                        this.style.opacity = '0.5';
+                    }, 0);
+                    
+                    // Set dataTransfer data
+                    e.dataTransfer.effectAllowed = 'move';
+                    e.dataTransfer.setData('text/html', this.innerHTML);
+                });
+                
+                task.addEventListener('dragend', function() {
+                    this.classList.remove('dragging');
+                    this.style.opacity = '1';
+                    draggedTask = null;
+                    
+                    // Remove highlight from all columns
+                    columns.forEach(col => {
+                        col.classList.remove('drag-over');
+                    });
+                });
+            });
+            
+            columns.forEach(column => {
+                // When a task is dragged over a column
+                column.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.classList.add('drag-over');
+                });
+                
+                // When a task leaves a column
+                column.addEventListener('dragleave', function() {
+                    this.classList.remove('drag-over');
+                });
+                
+                // When a task is dropped in a column
+                column.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.classList.remove('drag-over');
+                    
+                    if (draggedTask) {
+                        // Check if we're moving to a different column
+                        const sourceColumn = draggedTask.parentElement;
+                        if (sourceColumn !== this) {
+                            // Get status from column title
+                            const newStatus = this.previousElementSibling.querySelector('h5').textContent.trim();
+                            
+                            // In a real app, we would update the task status via API here
+                            console.log(`Task "${draggedTask.querySelector('h6').textContent}" moved to "${newStatus}"`);
+                            
+                            // Change the dropdown options based on new column
+                            updateTaskActions(draggedTask, newStatus);
+                        }
+                        
+                        // Move task to new column
+                        this.appendChild(draggedTask);
+                        
+                        // Update column counters
+                        updateCounters();
+                        
+                        // Show success notification
+                        showNotification('Task moved successfully!');
+                    }
+                });
+            });
+            
+            // Function to update the counter badges
+            function updateCounters() {
+                const todoCount = document.querySelector('#todo-column').children.length;
+                const inProgressCount = document.querySelector('#inprogress-column').children.length;
+                const doneCount = document.querySelector('#done-column').children.length;
+                
+                document.querySelector('.card-header .badge.bg-info').textContent = todoCount;
+                document.querySelector('.card-header .badge.bg-warning').textContent = inProgressCount;
+                document.querySelector('.card-header .badge.bg-success').textContent = doneCount;
+            }
+            
+            // Function to update task action menu based on new status
+            function updateTaskActions(taskElement, newStatus) {
+                const dropdown = taskElement.querySelector('.dropdown-menu');
+                if (dropdown) {
+                    // Clear existing move options
+                    const moveItems = dropdown.querySelectorAll('.dropdown-item[href="#"]').forEach(item => {
+                        if (item.textContent.includes('Move to')) {
+                            item.remove();
+                        }
+                    });
+                    
+                    // Add appropriate move options based on new status
+                    const moveOptionContainer = document.createElement('li');
+                    switch(newStatus.trim()) {
+                        case 'To Do':
+                            moveOptionContainer.innerHTML = `<a class="dropdown-item" href="#"><i class="fas fa-arrow-right me-2"></i> Move to In Progress</a>`;
+                            break;
+                        case 'In Progress':
+                            moveOptionContainer.innerHTML = `
+                                <a class="dropdown-item" href="#"><i class="fas fa-arrow-left me-2"></i> Move to To Do</a>
+                                <a class="dropdown-item" href="#"><i class="fas fa-arrow-right me-2"></i> Move to Done</a>
+                            `;
+                            break;
+                        case 'Done':
+                            moveOptionContainer.innerHTML = `<a class="dropdown-item" href="#"><i class="fas fa-arrow-left me-2"></i> Move to In Progress</a>`;
+                            break;
+                    }
+                    
+                    // Find the divider and insert before it
+                    const divider = dropdown.querySelector('.dropdown-divider');
+                    if (divider) {
+                        divider.parentNode.insertBefore(moveOptionContainer, divider);
+                    }
+                }
+            }
+            
+            // Function to show notification
+            function showNotification(message) {
+                // Create notification element
+                const notification = document.createElement('div');
+                notification.className = 'position-fixed bottom-0 end-0 p-3';
+                notification.style.zIndex = '1050';
+                
+                notification.innerHTML = `
+                    <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="toast-header">
+                            <i class="fas fa-check-circle text-success me-2"></i>
+                            <strong class="me-auto">TaskMaster</strong>
+                            <small>Just now</small>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body">
+                            ${message}
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                // Remove notification after 3 seconds
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }
+            
+            // Initialize tooltips
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        });
+    </script>
+</body>
+</html> 
